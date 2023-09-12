@@ -31,7 +31,7 @@ function App() {
   }, [query]);
 
   return (
-    <div className="bg-slate-900 min-h-full sm:h-screen min-w-full lg:max-w-5xl p-5 font-sans">
+    <div className="bg-slate-900 min-h-full h-max sm:h-screen min-w-full lg:max-w-5xl p-5 font-sans">
       <Toaster/>
       <NavBar>
         <Search query={query} setQuery={setQuery} />
