@@ -31,7 +31,7 @@ function App() {
   }, [query]);
 
   return (
-    <div className="bg-slate-900 min-h-full h-max sm:h-screen min-w-full lg:max-w-5xl p-5 font-sans">
+    <div className="bg-slate-900 sm:h-screen min-w-full lg:max-w-5xl p-5 font-sans">
       <Toaster/>
       <NavBar>
         <Search query={query} setQuery={setQuery} />
@@ -50,3 +50,6 @@ export default App;
 function Main({ children }) {
   return <div className="sm:flex sm:justify-between gap-6 max-w-6xl lg:mx-auto">{children}</div>;
 }
+
+
+//git push --set-upstream origin master
