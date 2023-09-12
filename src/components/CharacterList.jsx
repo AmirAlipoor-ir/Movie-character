@@ -1,16 +1,26 @@
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Loader from "./Loader";
-function CharacterList({ characters, isLoading }) {
+function CharacterList({
+  selectedId,
+  characters,
+  isLoading,
+  onSelectCharacter,
+}) {
   if (isLoading)
     return (
-      <div className="flex flex-col mt-3 sm:w-3/5">
+      <div className="mt-3 sm:w-3/5 text-slate-300 text-base">
         <Loader />
       </div>
     );
   return (
     <div className="flex flex-col mt-3 gap-2 md:w-2/5 sm:w-3/6">
       {characters.map((item) => (
-        <Character key={item.id} item={item} />
+        <Character
+        selectedId={selectedId}
+          key={item.id}
+          item={item}
+          onSelectCharacter={onSelectCharacter}
+        />
       ))}
     </div>
   );
@@ -18,7 +28,7 @@ function CharacterList({ characters, isLoading }) {
 
 export default CharacterList;
 
-function Character({ item }) {
+function Character({ item, onSelectCharacter,selectedId }) {
   return (
     <div className="p-2 rounded-lg bg-slate-800 flex items-center gap-3 last:mb-5 justify-between">
       <div className="flex gap-3">
@@ -33,8 +43,11 @@ function Character({ item }) {
         </div>
       </div>
 
-      <button className="text-red-500 w-5 h-5 ">
-        <EyeIcon />
+      <button
+        className="text-red-500 w-5 h-5"
+        onClick={() => onSelectCharacter(item.id)}
+      >
+        {selectedId === item.id ? <EyeSlashIcon/> :<EyeIcon />}
       </button>
     </div>
   );

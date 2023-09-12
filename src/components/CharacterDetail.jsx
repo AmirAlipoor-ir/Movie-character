@@ -1,11 +1,62 @@
-import { character, episodes } from "../../data/data";
+import { useEffect, useState } from "react";
+import Loader from "./Loader";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-function CharacterDetail() {
+function CharacterDetail({ selectedId }) {
+  const [character, setCharacter] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [episodes, setEpisodes] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const { data } = await axios.get(
+          `https://rickandmortyapi.com/api/character/${selectedId}`
+        );
+        setCharacter(data);
+
+
+        const episodesId = data.episode.map((e) => e.split("/").at(-1));
+        const { data: episodeData } = await axios.get(
+          `https://rickandmortyapi.com/api/episode/${episodesId}`
+        );
+        setEpisodes([episodeData].flat().slice(0,5));
+
+
+      } catch (error) {
+        toast.error(error.response.data.error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    if (selectedId) fetchData();
+  }, [selectedId]);
+
+  if (isLoading)
+    return (
+      <div className="text-slate-300 flex-1">
+        <Loader />
+      </div>
+    );
+
+  if (!character || !selectedId)
+    return (
+      <div className="text-slate-300 flex-1 mt-3">
+        Please select a character
+      </div>
+    );
+
   return (
     <div className="text-slate-200 md:w-3/5 sm:w-3/6/6 mt-3">
       <div className="flex rounded-xl bg-slate-800 overflow-hidden">
-        <img src={character.image} alt={character.name} className="w-44 h-full" />
+        <img
+          src={character.image}
+          alt={character.name}
+          className="w-44 h-full"
+        />
         <div className="flex flex-col pl-3 gap-3">
           <div>
             <h3 className="text-slate-100 font-bold py-2">
@@ -38,9 +89,11 @@ function CharacterDetail() {
       </div>
       <div className="bg-slate-800 rounded-xl p-3 mt-4">
         <div className="flex justify-between mb-4">
-          <h2 className="text-slate-400 text-xl font-bold">List of Episodes:</h2>
+          <h2 className="text-slate-400 text-xl font-bold">
+            List of Episodes:
+          </h2>
           <button>
-            <ArrowUpCircleIcon className="w-5 h-5 text-slate-300"/>
+            <ArrowUpCircleIcon className="w-5 h-5 text-slate-300" />
           </button>
         </div>
         <ul>
@@ -50,7 +103,9 @@ function CharacterDetail() {
                 {String(index + 1).padStart(2, "0")}-{item.episode}:
                 <strong> {item.name}</strong>
               </div>
-              <div className="bg-slate-600 rounded-2xl px-3 py-1">{item.air_date}</div>
+              <div className="bg-slate-600 rounded-2xl px-3 py-1">
+                {item.air_date}
+              </div>
             </li>
           ))}
         </ul>

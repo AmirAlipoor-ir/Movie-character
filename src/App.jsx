@@ -11,6 +11,7 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,16 +31,24 @@ function App() {
     fetchData();
   }, [query]);
 
+  const handleSelectCharacter = (id) => {
+    setSelectedId((prevId) => (prevId === id ? null : id));
+  };
   return (
-    <div className="sm:h-screen min-w-full lg:max-w-5xl p-5 font-sans">
-      <Toaster/>
+    <div className="sm:h-screen h-screen lg:min-w-full lg:max-w-5xl p-5 font-sans">
+      <Toaster />
       <NavBar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={characters.length} />
       </NavBar>
       <Main>
-        <CharacterList characters={characters} isLoading={isLoading} />
-        <CharacterDetail />
+        <CharacterList
+        selectedId={selectedId}
+          characters={characters}
+          isLoading={isLoading}
+          onSelectCharacter={handleSelectCharacter}
+        />
+        <CharacterDetail selectedId={selectedId} />
       </Main>
     </div>
   );
@@ -48,8 +57,11 @@ function App() {
 export default App;
 
 function Main({ children }) {
-  return <div className="sm:flex sm:justify-between gap-6 max-w-6xl lg:mx-auto">{children}</div>;
+  return (
+    <div className="sm:flex sm:justify-between gap-6 max-w-6xl lg:mx-auto">
+      {children}
+    </div>
+  );
 }
-
 
 //git push --set-upstream origin master
