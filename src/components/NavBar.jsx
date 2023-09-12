@@ -20,7 +20,7 @@ export function Search({query,setQuery}) {
     value={query}
     onChange={e=> setQuery(e.target.value)}
       type="text"
-      className="rounded-md bg-slate-500 px-3 py-1 sm:py-2 sm:pr-6 sm:px-4"
+      className="rounded-md bg-slate-500 px-2 py-1 sm:py-2 sm:pr-6 sm:px-4"
       placeholder="search..."
     />
   );
