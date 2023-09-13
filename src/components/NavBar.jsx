@@ -5,7 +5,6 @@ function NavBar({ children }) {
     <nav className="bg-slate-700 rounded-xl flex max-w-6xl justify-between px-3 sm:py-5 sm:px-5 py-3 lg:mx-auto items-center">
       <Logo />
       {children}
-      <Favourites />
     </nav>
   );
 }
@@ -38,12 +37,12 @@ export function SearchResult({ numOfResult }) {
   );
 }
 
-export function Favourites() {
+export function Favourites({numOfFavourites}) {
   return (
     <button className="relative">
       <HeartIcon className="h-8 w-8 text-red-500 font-bold" />
       <span className="absolute top-0 rounded-full text-xs -right-1 text-slate-100 px-[4px] items-center justify-center bg-red-500">
-        4
+        {numOfFavourites}
       </span>
     </button>
   );

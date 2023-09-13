@@ -3,7 +3,7 @@ import { allCharacters } from "../data/data";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharacterList from "./components/CharacterList";
-import NavBar, { Search, SearchResult } from "./components/NavBar";
+import NavBar, { Favourites, Search, SearchResult } from "./components/NavBar";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -12,6 +12,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
+  const [favourites, setFavourites] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -28,27 +29,44 @@ function App() {
         setIsLoading(false);
       }
     }
+    if (query.length < 1) {
+      setCharacters([]);
+      return;
+    }
     fetchData();
   }, [query]);
 
   const handleSelectCharacter = (id) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
   };
+
+  const handleAddFavourites = (char) => {
+    // setFavourites([...favourites,char])
+    setFavourites((prevFav) => [...prevFav, char]);
+  };
+
+  const isAddToFavourite = favourites.map(fav => fav.id).includes(selectedId);
+
   return (
     <div className="sm:h-screen h-screen lg:min-w-full lg:max-w-5xl p-5 font-sans">
       <Toaster />
       <NavBar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={characters.length} />
+        <Favourites numOfFavourites={favourites.length} />
       </NavBar>
       <Main>
         <CharacterList
-        selectedId={selectedId}
+          selectedId={selectedId}
           characters={characters}
           isLoading={isLoading}
           onSelectCharacter={handleSelectCharacter}
         />
-        <CharacterDetail selectedId={selectedId} />
+        <CharacterDetail
+        isAddToFavourite={isAddToFavourite}
+          selectedId={selectedId}
+          onAddFavourite={handleAddFavourites}
+        />
       </Main>
     </div>
   );
@@ -63,5 +81,3 @@ function Main({ children }) {
     </div>
   );
 }
-
-//git push --set-upstream origin master

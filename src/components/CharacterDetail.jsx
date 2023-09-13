@@ -4,7 +4,7 @@ import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-function CharacterDetail({ selectedId }) {
+function CharacterDetail({ selectedId, onAddFavourite, isAddToFavourite }) {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -18,14 +18,11 @@ function CharacterDetail({ selectedId }) {
         );
         setCharacter(data);
 
-
         const episodesId = data.episode.map((e) => e.split("/").at(-1));
         const { data: episodeData } = await axios.get(
           `https://rickandmortyapi.com/api/episode/${episodesId}`
         );
-        setEpisodes([episodeData].flat().slice(0,5));
-
-
+        setEpisodes([episodeData].flat().slice(0, 5));
       } catch (error) {
         toast.error(error.response.data.error);
       } finally {
@@ -80,10 +77,17 @@ function CharacterDetail({ selectedId }) {
               {character.location.name}
             </p>
           </div>
-          <div className="actions">
-            <button className="cursor-pointer font-medium rounded-2xl text-sm bg-slate-500 px-3 py-2">
-              Add to Favourite
-            </button>
+          <div className="">
+            {isAddToFavourite ? (
+              <p>Already Added To Favourites ✅</p>
+            ) : (
+              <button
+                onClick={() => onAddFavourite(character)}
+                className="cursor-pointer font-medium rounded-2xl text-sm bg-slate-500 px-3 py-2"
+              >
+                Add to Favourite
+              </button>
+            )}
           </div>
         </div>
       </div>
