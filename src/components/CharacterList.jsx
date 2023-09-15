@@ -28,7 +28,7 @@ function CharacterList({
 
 export default CharacterList;
 
-function Character({ item, onSelectCharacter,selectedId }) {
+export function Character({ item, onSelectCharacter,selectedId }) {
   return (
     <div className="p-2 rounded-lg bg-slate-800 flex items-center gap-3 last:mb-5 justify-between">
       <div className="flex gap-3">

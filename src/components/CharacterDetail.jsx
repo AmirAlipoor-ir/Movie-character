@@ -123,7 +123,7 @@ function EpisodeList({ episodes }) {
     <div className="bg-slate-800 rounded-xl p-3 mt-4">
       <div className="flex justify-between mb-4">
         <h2 className="text-slate-400 text-xl font-bold">List of Episodes:</h2>
-        <button onClick={() => setSortBy((is) => !is)}>
+        <button className="z-0" onClick={() => setSortBy((is) => !is)}>
           <ArrowUpCircleIcon
             className={`w-5 h-5 transition-all text-slate-300 ${
               sortBy ? "rotate-0" : "rotate-180"

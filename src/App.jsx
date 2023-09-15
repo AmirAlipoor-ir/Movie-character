@@ -6,6 +6,7 @@ import CharacterList from "./components/CharacterList";
 import NavBar, { Favourites, Search, SearchResult } from "./components/NavBar";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "./components/Modal";
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -48,12 +49,13 @@ function App() {
   const isAddToFavourite = favourites.map(fav => fav.id).includes(selectedId);
 
   return (
-    <div className="sm:h-screen h-screen lg:min-w-full lg:max-w-5xl p-5 font-sans">
+    <div className="sm:h-screen relative h-screen lg:min-w-full lg:max-w-5xl p-5 font-sans">
       <Toaster />
+      {/* <Modal title="modal test" open={} onOpen={}></Modal> */}
       <NavBar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={characters.length} />
-        <Favourites numOfFavourites={favourites.length} />
+        <Favourites favourites={favourites} />
       </NavBar>
       <Main>
         <CharacterList

@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.modal {
+    width: 98%;
+    min-height: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #0f172a;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 50px #475569;
+  }
+  
+  .modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #475569;
+  }
+  
+  .icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  
+  .modal__header .close {
+    color: #f43f5e;
+  }
+  
+  .modal__header .title {
+    color: #e2e8f0;
+  }
+  
+  @media (min-width: 768px) {
+    .modal {
+      max-width: 30rem;
+    }
+  }
+  
+  .backdrop {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(63, 69, 76, 0.8);
+  }
