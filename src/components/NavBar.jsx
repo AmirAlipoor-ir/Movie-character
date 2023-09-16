@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Modal from "./Modal";
 import { Character } from "./CharacterList";
 function NavBar({ children }) {
@@ -39,13 +39,15 @@ export function SearchResult({ numOfResult }) {
   );
 }
 
-export function Favourites({ favourites }) {
+export function Favourites({ favourites,onDeleteFavourite }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <Modal title="List of favourites" open={isOpen} onOpen={setIsOpen}>
         {favourites.map((item) => (
-          <Character item={item} onSelectCharacter={() => {}} selectedId="1" />
+          <Character key={item.id} item={item} >
+            <button onClick={()=>onDeleteFavourite(item.id)}><TrashIcon className="icon stroke-red-500"/></button>
+          </Character>
         ))}
       </Modal>
       <button className="relative" onClick={() => setIsOpen((is) => !is)}>

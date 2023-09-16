@@ -22,7 +22,7 @@ function App() {
         const { data } = await axios.get(
           `https://rickandmortyapi.com/api/character/?name=${query}`
         );
-        setCharacters(data.results.slice(0, 3));
+        setCharacters(data.results.slice(0, 4));
       } catch (err) {
         setCharacters([]);
         toast.error(err.response.data.error);
@@ -46,7 +46,11 @@ function App() {
     setFavourites((prevFav) => [...prevFav, char]);
   };
 
-  const isAddToFavourite = favourites.map(fav => fav.id).includes(selectedId);
+  const handleDeleteFavourites = (id) => {
+    setFavourites((prevFav) => prevFav.filter((fav) => fav.id !== id));
+  };
+
+  const isAddToFavourite = favourites.map((fav) => fav.id).includes(selectedId);
 
   return (
     <div className="sm:h-screen relative h-screen lg:min-w-full lg:max-w-5xl p-5 font-sans">
@@ -55,7 +59,7 @@ function App() {
       <NavBar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={characters.length} />
-        <Favourites favourites={favourites} />
+        <Favourites onDeleteFavourite={handleDeleteFavourites} favourites={favourites} />
       </NavBar>
       <Main>
         <CharacterList
@@ -65,7 +69,7 @@ function App() {
           onSelectCharacter={handleSelectCharacter}
         />
         <CharacterDetail
-        isAddToFavourite={isAddToFavourite}
+          isAddToFavourite={isAddToFavourite}
           selectedId={selectedId}
           onAddFavourite={handleAddFavourites}
         />

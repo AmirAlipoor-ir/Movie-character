@@ -13,14 +13,16 @@ function CharacterList({
       </div>
     );
   return (
-    <div className="flex flex-col mt-3 gap-2 md:w-2/5 sm:w-3/6">
+    <div className="flex flex-col  first:mt-3 md:w-2/5 sm:w-3/6">
       {characters.map((item) => (
-        <Character
-        selectedId={selectedId}
-          key={item.id}
-          item={item}
-          onSelectCharacter={onSelectCharacter}
-        />
+        <Character key={item.id} item={item}>
+          <button
+            className="text-red-500 w-5 h-5"
+            onClick={() => onSelectCharacter(item.id)}
+          >
+            {selectedId === item.id ? <EyeSlashIcon /> : <EyeIcon />}
+          </button>
+        </Character>
       ))}
     </div>
   );
@@ -28,9 +30,9 @@ function CharacterList({
 
 export default CharacterList;
 
-export function Character({ item, onSelectCharacter,selectedId }) {
+export function Character({ item, children }) {
   return (
-    <div className="p-2 rounded-lg bg-slate-800 flex items-center gap-3 last:mb-5 justify-between">
+    <div className="p-2 my-1 rounded-lg bg-slate-800 flex items-center last:mb-3 justify-between">
       <div className="flex gap-3">
         <img
           className="w-14 h-14 rounded-xl"
@@ -43,12 +45,7 @@ export function Character({ item, onSelectCharacter,selectedId }) {
         </div>
       </div>
 
-      <button
-        className="text-red-500 w-5 h-5"
-        onClick={() => onSelectCharacter(item.id)}
-      >
-        {selectedId === item.id ? <EyeSlashIcon/> :<EyeIcon />}
-      </button>
+     {children}
     </div>
   );
 }

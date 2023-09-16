@@ -12,7 +12,8 @@ function Modal({ title, children, onOpen, open }) {
             <XCircleIcon className="icon close" />
           </button>
         </div>
-        {children}
+        <div className="">{children}</div>
+        
       </div>
     </div>
   );
