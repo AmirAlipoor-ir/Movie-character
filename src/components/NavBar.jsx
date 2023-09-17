@@ -25,7 +25,7 @@ export function Search({ query, setQuery }) {
       value={query}
       onChange={(e) => setQuery(e.target.value)}
       type="text"
-      className="rounded-md bg-slate-500 px-2 py-1 sm:py-2 sm:pr-6 sm:px-4 outline-none"
+      className="rounded-md bg-slate-500 px-2 py-1 w-3/5 sm:py-2 sm:pr-6 sm:px-4 md:w-2/5 sm:w-auto outline-none"
       placeholder="search..."
     />
   );
