@@ -4,12 +4,12 @@ function Modal({ title, children, onOpen, open }) {
   if (!open) return null;
   return (
     <div>
-      <div className="backdrop" onClick={() => onOpen(false)}></div>
+      <div className="w-screen h-screen fixed inset-0 bg-backDrop" onClick={() => onOpen(false)}></div>
       <div className="modal z-20">
         <div className="modal__header">
-          <h2 className="title">{title}</h2>
+          <h2 className="text-slate-200">{title}</h2>
           <button onClick={() => onOpen(false)}>
-            <XCircleIcon className="icon close" />
+            <XCircleIcon className="icon text-red-600" />
           </button>
         </div>
         <div className="">{children}</div>

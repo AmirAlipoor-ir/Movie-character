@@ -62,8 +62,8 @@ export default CharacterDetail;
 
 function CharacterSubInfo({ character, isAddToFavourite ,onAddFavourite}) {
   return (
-    <div className="flex rounded-xl bg-slate-800 overflow-hidden">
-      <img src={character.image} alt={character.name} className="w-44 h-full" />
+    <div className="sm:flex-row sm:flex rounded-xl bg-slate-800 overflow-hidden">
+      <img src={character.image} alt={character.name} className="w-full sm:w-44 h-full" />
       <div className="flex flex-col pl-3 gap-3">
         <div>
           <h3 className="text-slate-100 font-bold py-2">
@@ -93,7 +93,7 @@ function CharacterSubInfo({ character, isAddToFavourite ,onAddFavourite}) {
           ) : (
             <button
               onClick={() => onAddFavourite(character)}
-              className="cursor-pointer font-medium rounded-2xl text-sm bg-slate-500 px-3 py-2"
+              className="cursor-pointer mb-3 font-medium rounded-2xl text-sm bg-slate-500 px-3 py-2"
             >
               Add to Favourite
             </button>
@@ -134,11 +134,11 @@ function EpisodeList({ episodes }) {
       <ul>
         {sortedEpisodes.map((item, index) => (
           <li className="flex justify-between mb-3" key={item.id}>
-            <div>
+            <div className="text-sm sm:text-base">
               {String(index + 1).padStart(2, "0")}-{item.episode}:
               <strong> {item.name}</strong>
             </div>
-            <div className="bg-slate-600 rounded-2xl px-3 py-1">
+            <div className="bg-slate-600 rounded-2xl px-3 py-1 text-sm sm:text-base">
               {item.air_date}
             </div>
           </li>

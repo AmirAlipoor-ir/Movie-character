@@ -31,24 +31,25 @@
     height: 1.6rem;
   }
   
-  .modal__header .close {
-    color: #f43f5e;
-  }
-  
-  .modal__header .title {
-    color: #e2e8f0;
-  }
-  
   @media (min-width: 768px) {
     .modal {
       max-width: 30rem;
     }
   }
   
-  .backdrop {
+  /* .modal__header .close {
+    color: #f43f5e;
+  } */
+  
+  /* .modal__header .title {
+    color: #e2e8f0;
+  } */
+  
+
+  /* .backdrop {
     width: 100vw;
     height: 100vh;
     position: fixed;
     inset: 0;
     background-color: rgba(63, 69, 76, 0.8);
-  }
+  } */
