@@ -7,41 +7,23 @@ import NavBar, { Favourites, Search, SearchResult } from "./components/NavBar";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "./components/Modal";
+import useCharacters from "./hooks/useCharacter";
 
 function App() {
-  const [characters, setCharacters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState("");
+  const { isLoading, characters } = useCharacters(
+    "https://rickandmortyapi.com/api/character/?name",
+    query
+  );
   const [selectedId, setSelectedId] = useState(null);
-  const [favourites, setFavourites] = useState(()=> JSON.parse(localStorage.getItem("FAVOURITES"))|| []);
+  const [favourites, setFavourites] = useState(
+    () => JSON.parse(localStorage.getItem("FAVOURITES")) || []
+  );
+
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character/?name=${query}`
-        );
-        setCharacters(data.results.slice(0, 4));
-      } catch (err) {
-        setCharacters([]);
-        toast.error(err.response.data.error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    if (query.length < 1) {
-      setCharacters([]);
-      return;
-    }
-    fetchData();
-  }, [query]);
-
-
-useEffect(()=>{
-  localStorage.setItem("FAVOURITES", JSON.stringify(favourites))
-},[favourites])
-
+    localStorage.setItem("FAVOURITES", JSON.stringify(favourites));
+  }, [favourites]);
 
   const handleSelectCharacter = (id) => {
     setSelectedId((prevId) => (prevId === id ? null : id));
@@ -65,7 +47,10 @@ useEffect(()=>{
       <NavBar>
         <Search query={query} setQuery={setQuery} />
         <SearchResult numOfResult={characters.length} />
-        <Favourites onDeleteFavourite={handleDeleteFavourites} favourites={favourites} />
+        <Favourites
+          onDeleteFavourite={handleDeleteFavourites}
+          favourites={favourites}
+        />
       </NavBar>
       <Main>
         <CharacterList
